@@ -42,22 +42,22 @@ Ta utgangspunkt i "Figure 3 - breadboard" fra oppgaveteksten. Det har ikke noe �
 
 Det kan lønne seg å begynne med å plassere alt sånn som det er vist i "Figure 5" fra oppgaveteksten. Da slipper dere å rive opp alt dere har koblet senere fordi dere må få plass til en ny komponent :).
 
-Spenningsregulatoren LM7805 skal kobles opp sånn som det står til høyre på første side i LM7805-databladet. Vi brukte 100 µF på kondensatoren på output.
+Spenningsregulatoren LM7805 skal kobles opp sånn som det står til høyre på første side i LM7805-databladet. Vi brukte 100 µF (?) på kondensatoren på output.
 
-Generelt tips 2: Hvis dere kobler høy spenning (10-12 V) rett inn på komponentene deres, så risikerer dere å ødelegge komponentene. Om dere gjør det er det bare å hente ny komponent, men det er like greit å bare ikke drepe komponentene. Så jeg anbefaler alle å ha forsyningsspenning (10-12V) på én av spenningslinjene på breadboardet, og så sette opp 5V på alle de andre spenningslinjene med én gang. (Vi klarte å koble SRAM-brikken til 10V og brukte litt tid på å finne ut om den fortsatt funket.)
+Hvis dere kobler høy spenning (10-12 V) rett inn på komponentene deres, så risikerer dere å ødelegge komponentene. Om dere gjør det er det bare å hente ny komponent, men det er like greit å bare ikke drepe komponentene. Så jeg anbefaler alle å ha forsyningsspenning (10-12V) på én av spenningslinjene på breadboardet, og så sette opp 5V på alle de andre spenningslinjene med én gang. (Vi klarte å koble SRAM-brikken til 10V og brukte litt tid på å finne ut om den fortsatt funket.)
 
 #### Oppgave 2
 
 ##### Kjekt å lese
 
-* Om decoupling capacitors i oppgaveteksten. Andre avsnitt under "Decoupling" i kapittel 2.1.2, side 10.
+* Om decoupling capacitors i oppgaveteksten. Andre avsnitt under "Decoupling", side 10.
 * "Figure 1", side 1 i ATmega162-databladet. Oversikt over pinnene på ATmega162.
 
 ##### Kjekt å vite
 
 5V fra spenningsregulatoren skal inn på VCC på ATmega162. GND til jord.
 
-"Decoupling capacitor" kan være 100 µF. Kobles mellom pin 1 (VCC) på ATmega162 og jord.
+"Decoupling capacitor" kan være 100 µF (?). Kobles mellom pin 1 (VCC) på ATmega162 og jord.
 
 #### Oppgave 3
 
@@ -68,7 +68,7 @@ Generelt tips 2: Hvis dere kobler høy spenning (10-12 V) rett inn på komponent
 
 ##### Kjekt å vite
 
-Sjekk side 5-6 i AVR042-userguide. Kort fortalt skal dere koble opp kretsene som er i figurene på side 6.
+Sjekk side 5-6 i AVR-userguide. Kort fortalt skal dere koble opp kretsene som er i figurene på side 6.
 
 Punktet der det står "RESET" i "Figure 2-3" skal kobles på der det står "Reset" i "Figure 2-2". "SW" er en trykknapp. Husk å måle på knappen hvilken vei den kortsluttes når man trykker på den. Ikke tenk på de rare linjene på høyre og venstre side av "SW" i "Figure 2-3".
 
@@ -135,11 +135,11 @@ sudo apt-get upgrade
 sudo apt-get install gcc-avr binutils-avr gdb-avr avr-libc avrdude
 ~~~
 
-avr-libc er et bibliotek dere skal bruke for å progge mikrokontrolleren. Biblioteket blir antakelig lagret på /usr/lib/avr (eller bare søk på "avr" i filsystemet ditt). Inni der kan du blant annet finne "io.h" og "portpins.h" som kan være kjekt (men ikke nødvendig) å kikke litt på.
+avr-libc er et bibliotek dere skal bruke for å progge mikrokontrolleren. Biblioteket blir antakelig lagret på /usr/lib/avr (eller bare søk på "avr" i filsystemet ditt). Inni der kan du blant annet finne *io.h* og *portpins.h* som kan være kjekt (men ikke nødvendig) å kikke litt på.
 
-For å lage et lite testprogram trenger du også Makefile. Øverst i Makefile må du endre til følgende:
+For å lage et lite testprogram trenger du også *Makefile*. Bruk den som blir lagt ut sammen med alle databladene. Øverst i *Makefile* må du endre til følgende:
 
-~~~makefile
+~~~Makefile
 # List all source files to be compiled; separate with space
 SOURCE_FILES := main.c
 
@@ -147,11 +147,11 @@ SOURCE_FILES := main.c
 PROGRAM_WITH_JTAG := yes
 ~~~
 
-Her har jeg altså tatt vekk alt annet enn main.c fordi testprogrammet bare skal inneholde main.c. Når du utvider programmet må de nye .c-filene legges til her (`SOURCE_FILES := main.c fil.c hei.c kaos.c`). I tillegg har jeg endret fra no til yes på PROGRAM_WITH_JTAG. Ganske enkelt fordi vi bruker JTAG.
+Her har jeg altså tatt vekk alt annet enn `main.c` fordi testprogrammet bare skal inneholde *main.c*. Når du utvider programmet må de nye .c-filene legges til her (`SOURCE_FILES := main.c fil.c hei.c kaos.c`). I tillegg har jeg endret fra no til yes på PROGRAM_WITH_JTAG. Ganske enkelt fordi vi bruker JTAG.
 
 Et enkelt testprogram kan se ut som dette:
 
-*main.c:*
+*main.c*:
 ~~~c
 #include <avr/io.h>
 int main() {
@@ -159,24 +159,24 @@ int main() {
   // De tre kommentere linjene under her er andre måter å skrive det samme som PORTB = 0b1
   // PORTB = 1;
   // PORTB = 0b00000001;
-  // PORTB = (1 << PIN1);
+  // PORTB = (1 << PB0);
 
   return 0;
 }
 ~~~
 
-Programmet over inkluderer io.h fra avr-biblioteket. Det trengs for å forenkle kommunikasjonen med mikroprosessoren.
+Programmet over inkluderer *io.h* fra avr-biblioteket. Det trengs for å forenkle kommunikasjonen med mikroprosessoren.
 
-PORTB er definert av io.h. Ved å gi PORTB en verdi vil man sette pinnene på port B høye eller lave. Hvis du kikker på pin-oversikten til ATmega162 så ser du at port B er pinnene 1-8 (port A er pin 32-39, port C er pin 21-28 osv). PORTB = 0b1: her setter vi altså den første pinnen i port B til høy (1) og de andre pinnene til lav (0). Hvis vi i stedet skriver PORTB = 0b01010101 vil vi sette annenhver pin på port B til høy og lav.
+PORTB er definert av *io.h*. Ved å gi PORTB en verdi vil man sette pinnene på port B høye eller lave. Hvis du kikker på pin-oversikten til ATmega162 så ser du at port B er pinnene 1-8 (port A er pin 32-39, port C er pin 21-28 osv). `PORTB = 0b1`: her setter vi altså den første pinnen i port B til høy (1) og de andre pinnene til lav (0). Hvis vi i stedet skriver `PORTB = 0b01010101` vil vi sette annenhver pin på port B til høy og lav.
 
-For å kompilere programmet og kjøre det må du først legge main.c og Makefile i samme mappe. Åpne deretter terminalen i mappen du har lagret greiene i og kjør følgende:
+For å kompilere programmet og kjøre det må du først legge *main.c* og *Makefile* i samme mappe. Åpne deretter terminalen i mappen du har lagret greiene i og kjør følgende:
 
 ~~~bash
 make
 sudo make flash
 ~~~
 
-`make` kompilerer programmet. Får du feilmeldinger her er det antakelig noe feil med C-koden din eller du har glemt å legge til filer i Makefile.
+`make` kompilerer programmet. Får du feilmeldinger her er det antakelig noe feil med C-koden din eller du har glemt å legge til filer i *Makefile*.
 `sudo make flash` sender programmet ut til mikroprosessoren. (Det er ikke sikkert at du trenger å bruke `sudo` (`sudo` gjør at du utfører kommandoen som superbruker), men hvis `make flash` uten `sudo` gir feilmelding må du bruke `sudo make flash`.)
 
 Gratulerer, du har nå programmert ATmega162! Sjekk at de riktige pinnene ble satt høye (5V) og lave (0V) med multimeter eller oscilloskopet :).
@@ -208,7 +208,7 @@ Så skal T1_out og R1_in på MAX kobles til henholdsvis Transmit (pin 3) og Rece
 
 Vi blåkopierte noe greier fra ATmega162-databladet. Hvis du søker på "usart_init" i databladet så finner du mye greier man kan lese sånn rundt side 172.
 
-*uart.c:*
+*uart.c*:
 ~~~c
 #include <avr/io.h>
 #include <stdio.h>
@@ -243,13 +243,13 @@ Her ser dere at vi (til forskjell fra eksempelkodesnuttene i ATmega162-datablade
 
 ##### Kjekt å lese
 
-* putty-dok
+* (Ikke nødvendig, men kanskje kjekt. Putty-guide: https://www.ssh.com/ssh/putty/putty-manuals/0.68/Chapter3.html)
 * "C code example" under "USART Initialization", side 172 i ATmega162-databladet.
 * "Internal Clock Generation – The Baud Rate Generator", side 169 i ATmega162-databladet.
 
 ##### Kjekt å vite
 
-*main.c:*
+*main.c*:
 ~~~c
 #include <avr/io.h>
 #include "uart.h"
@@ -266,22 +266,22 @@ void main(void) {
 }
 ~~~
 
-Denne sender 'a' fra mikroprosessoren til datamaskinen via seriellkabelen. Husk å oppdatere Makefile med `SOURCE_FILES := main.c uart.c`. Kjør `make` og `make flash` (eller `sudo make flash`) for å kompilere programmet og kaste det ut til mikroprosessoren.
+Denne sender 'a' fra mikroprosessoren til datamaskinen via seriellkabelen. Husk å oppdatere *Makefile* med `SOURCE_FILES := main.c uart.c`. Kjør `make` og `make flash` (eller `sudo make flash`) for å kompilere programmet og kaste det ut til mikroprosessoren.
 
-Bruk putty eller picocom for å lese seriellkommunikasjonen fra mikrokontrolleren. Stikkord her er baud: 9600, stoppbits: 2, port: /dev/ttyS0 (<- siste tegn er null, ikke o).
-Putty kan startes via grafisk grensesnitt eller med `putty blabla`. Picocom kan startes med `picocom blabla`.
+Bruk putty for å lese seriellkommunikasjonen fra mikrokontrolleren. Stikkord her er baud: 9600, stoppbits: 2, port: /dev/ttyS0 (<- siste tegn er null, ikke o).
+Putty kan startes via grafisk grensesnitt eller med `putty -serial /dev/ttyS0 -sercfg 9600,8,n,2,N` (?).
 
-Hvis du ikke får opp "aaaaaaaaa..." i putty eller picocom nå, så er det noe feil et sted. En grei måte å feilsøke på er å bruke oscilloskopet. Sjekk pinnen på ATmega162 som skal sende ut bokstaven. Prøv å kjøre programmet med og uten sending av 'a' sånn at du vet om prosessoren sender. Bruk oscilloskopet på MAX-en også. Og ved seriellkontakten. Hvis alt ser greit ut fram til seriellkontakten, så kan det tenkes at dere har koblet seriellkontakten motsatt av det som er rett.
+Hvis du ikke får opp "aaaaaaaaa..." i putty nå, så er det noe feil et sted. En grei måte å feilsøke på er å bruke oscilloskopet. Sjekk pinnen på ATmega162 som skal sende ut bokstaven. Prøv å kjøre programmet med og uten sending av 'a' sånn at du vet om prosessoren sender. Bruk oscilloskopet på MAX-en også. Og ved seriellkontakten. Hvis alt ser greit ut fram til seriellkontakten, så kan det tenkes at dere har koblet seriellkontakten motsatt av det som er rett.
 
 #### Oppgave 10
 
 ##### Kjekt å lese
 
-* fdevopen()-dokumentasjonen på https://www.nongnu.org/avr-libc/user-manual/group__avr__stdio.html#gab599ddf60819df4cc993c724a83cb1a4
+* `fdevopen()`-dokumentasjonen på https://www.nongnu.org/avr-libc/user-manual/group__avr__stdio.html#gab599ddf60819df4cc993c724a83cb1a4
 
 ##### Kjekt å vite
 
-Dere skal putte et fdevopen()-kall inn i uart_init()-funksjonen-deres. Hvis dere kikker på fdevopen()-dokumentasjonen på https://www.nongnu.org/avr-libc/user-manual/group__avr__stdio.html#gab599ddf60819df4cc993c724a83cb1a4 så ser dere at fdevopen() tar inn to funksjoner. Altså skal funksjonen kalles opp som følger:
+Dere skal putte et `fdevopen()`-kall inn i `uart_init()`-funksjonen-deres. Hvis dere kikker på `fdevopen()`-dokumentasjonen på https://www.nongnu.org/avr-libc/user-manual/group__avr__stdio.html#gab599ddf60819df4cc993c724a83cb1a4 så ser dere at `fdevopen()` tar inn to funksjoner. Altså skal funksjonen kalles opp som følger:
 
 ~~~c
 void uart_init(unsigned int ubrr) {
@@ -299,7 +299,7 @@ void uart_init(unsigned int ubrr) {
 }
 ~~~
 
-Hvis dere kompilerer dette får dere antakelig noen snåle feilmeldinger. Løsningen på dette ligger i fdevopen()-dokumentasjonen. fdevopen() tar nemlig inn to funksjoner som har returtype int og som har argumenter at typen char og FILE*. Derfor må dere gjøre om uart_transmit() og uart_receive() til følgende:
+Hvis dere kompilerer dette får dere antakelig noen snåle feilmeldinger. Løsningen på dette ligger i `fdevopen()`-dokumentasjonen. `fdevopen()` tar nemlig inn to funksjoner som har returtype `int` og som har argumenter at typen `char` og `FILE*`. Derfor må dere gjøre om `uart_transmit()` og `uart_receive()` til følgende:
 
 ~~~c
 int uart_transmit(char data, FILE * file) {
@@ -319,13 +319,13 @@ int uart_receive(FILE * file){
 }
 ~~~
 
-Funksjonene er de samme, forskjellen er returtype int, at uart_transmit() returnerer 0, og at begge funksjoner har fått et argument av typen FILE* som ikke gjør noe. Husk å oppdatere headerfila også.
+Funksjonene er de samme, forskjellen er returtype `int`, at `uart_transmit()` returnerer `0`, og at begge funksjoner har fått et argument av typen `FILE*` som ikke gjør noe. Husk å oppdatere headerfila også.
 
 #### Oppgave 11
 
 ##### Kjekt å vite
 
-Nå kan main.c oppdateres til følgende:
+Nå kan *main.c* oppdateres til følgende:
 
 ~~~c
 #include <avr/io.h>
@@ -341,7 +341,7 @@ void main(void) {
 }
 ~~~
 
-Kompiler og last opp til mikrokontrolleren. Kjør putty eller picocom på PCen. Nå vil det (forhåpentligvis) dukke opp "Ting funker" i putty/picocom :).
+Kompiler og last opp til mikrokontrolleren. Kjør putty på PCen. Nå vil det (forhåpentligvis) dukke opp "Ting funker" i putty :).
 
 ### Lab 2
 
@@ -397,7 +397,6 @@ int main() {
 
 ##### Kjekt å lese
 
-* Noe om CS1 og CS2 på SRAM
 * "External memory interface", side 26 i ATmega162-databladet gjelder her også.
 * "Truth table(1,2,3)", side 2 i SRAM-databladet.
 * "Special Function IO Register – SFIOR", side 32 i ATmega162-databladet. Forklarer maskering av pinner. Se spesielt "Table 4".
@@ -421,7 +420,7 @@ Det som står igjen nå er koble data fra ATmega162 til SRAM. Data kommer ut på
 
 Nå kan du teste SRAM-en. Vi hardkokte eksempeltestprogrammet som vi fikk utdelt i oppgaven. I tillegg må du bruke uart-driveren som du lagre i lab1, og så må du huske å initiere SRAM-en:
 
-*main.c:*
+*main.c*:
 ~~~c
 #include <avr/io.h>
 #include "uart.h"
@@ -439,7 +438,7 @@ void main(void) {
 }
 ~~~
 
-*sram.c:*
+*sram.c*:
 ~~~c
 #include "sram.h"
 
@@ -482,7 +481,7 @@ void SRAM_test(void) {
 }
 ~~~
 
-*sram.h:*
+*sram.h*:
 ~~~c
 #include <stdlib.h>
 #include <avr/io.h>
@@ -492,11 +491,11 @@ void SRAM_init();
 void SRAM_test(void);
 ~~~
 
-SRAM_test() gir tilbakemeldinger fra testen gjennom uart, altså må du koble seriellkabelen til PCen og åpne putty for å se hva testen sier.
+`SRAM_test()` gir tilbakemeldinger fra testen gjennom uart, altså må du koble seriellkabelen til PCen og åpne putty for å se hva testen sier.
 
-SRAM_test() lagrer verdier på alle adressene i SRAM, og etterpå leser den av de samme adressene igjen. Hvis den leser av det samme som den har lagres, så får du beskjed om at alt er på stell. Hvis den leser av noe annet enn det den lagres, så får du beskjed om at det er noe feil her.
+`SRAM_test()` lagrer verdier på alle adressene i SRAM, og etterpå leser den av de samme adressene igjen. Hvis den leser av det samme som den har lagres, så får du beskjed om at alt er på stell. Hvis den leser av noe annet enn det den lagres, så får du beskjed om at det er noe feil her.
 
-Hvis du ikke får opp noe som helst i putty så har ikke putty kontakt med kretsen. Hvis testprogrammet sier at det ikke er noen feil, så har du gjort alt riktig. Hvis du får en feil eller to, så har du antakelig gjort alt riktig - feil kan forekomme iblant likevel. Hvis du får masse feil så har du antakelig koblet noe feil. Hvis testprogrammet leser av feil verdi på alle adresseplassene (og gjerne akkurat samme verdi hver gang), så er det sannsynligvis noe feil med initieringen av SRAM (SRAM_init()).
+Hvis du ikke får opp noe som helst i putty så har ikke putty kontakt med kretsen. Hvis testprogrammet sier at det ikke er noen feil, så har du gjort alt riktig. Hvis du får en feil eller to, så har du antakelig gjort alt riktig - feil kan forekomme iblant likevel. Hvis du får masse feil så har du antakelig koblet noe feil. Hvis testprogrammet leser av feil verdi på alle adresseplassene (og gjerne akkurat samme verdi hver gang), så er det sannsynligvis noe feil med initieringen av SRAM (`SRAM_init()`).
 
 (Du trenger ikke å definere ALE som utgang (`DDRE = 0b10`) i SRAM-testprogrammet.)
 
@@ -509,28 +508,28 @@ Hvis du ikke får opp noe som helst i putty så har ikke putty kontakt med krets
 
 ##### Kjekt å vite
 
-Når du sender data til en adresse fra ATmega162 så ser det omtrent ut som dette: `memory[0x1A75] = 1;`. Den kodelinja der lagrer `1` på adressen `0x1A75`. Det betyr at `1` lagres på den adressen i SRAM-minnet. Men hvis du skriver `memory[0x13FF] = 1;` så sender du `1` til OLED. Dette skal ikke lagres på SRAM, selv om det kan virke litt sånn når du progger.
+Når du sender data til en adresse fra ATmega162 så ser det omtrent ut som dette: `memory[0x1A75] = 1;`. Den kodelinja der lagrer `1` på adressen `0x1A75`. Det betyr at `1` lagres på den adressen i SRAM-minnet. Men hvis du skriver `memory[0x13FF] = 1;` så sender du `1` til OLED. Dette skal ikke lagres på SRAM, selv om det kan se litt sånn ut.
 
 Poenget med GAL er å finne ut hvilken komponent som ATmega162 prøver å sende data til. Først må vi definere adresseområdene. Denne forklaringen tar utgangspunkt i adresseområdene beskrevet i "Figure 13" i oppgaveteksten, altså følgende:
 
 ~~~
 Dings                  Adresse
                     Hex       Binær
-SRAM start:         0x1FFF    1 111 111111111
-SRAM slutt:         0x1800    1 100 000000000
-ADC start:          0x17FF    1 011 111111111
-ADC slutt:          0x1400    1 010 000000000
-OLED-data start:    0x13FF    1 001 111111111
-OLED-data slutt:    0x1200    1 001 000000000
-OLED-command start: 0x11FF    1 000 111111111
-OLED-command slutt: 0x1000    1 000 000000000
+SRAM slutt:         0x1FFF    1 111 111111111
+SRAM start:         0x1800    1 100 000000000
+ADC slutt:          0x17FF    1 011 111111111
+ADC start:          0x1400    1 010 000000000
+OLED-data slutt:    0x13FF    1 001 111111111
+OLED-data start:    0x1200    1 001 000000000
+OLED-command slutt: 0x11FF    1 000 111111111
+OLED-command start: 0x1000    1 000 000000000
 ~~~
 
-GAL skal altså passe på at når vi sender noe til adresser mellom `0x1FFF` og `0x1800` så går det til SRAM, når vi sender noe til `0x17FF`-`0x1400` så går det til ADC osv. Dette gjøres ved å koble adressebitene inn på GAL-en, og ved å sjekke hvilke av pinnene som er høye/lave, så finner vi ut hvilken komponent som skal ta imot data. Alle komponentene som skal ta imot data har "skru på"-innganger (chip select aka CS), så GAL-en skrur rett og slett på den komponenten som skal ha data, og så skrur den av de andre.
+GAL skal altså passe på at når vi sender noe til adresser mellom `0x1800` og `0x1FFF` så går det til SRAM, når vi sender noe til `0x1400`-`0x17FF` så går det til ADC osv. Dette gjøres ved å koble adressebitene inn på GAL-en, og ved å sjekke hvilke av pinnene som er høye/lave, så finner vi ut hvilken komponent som skal ta imot data. Alle komponentene som skal ta imot data har "skru på"-innganger (chip select aka CS), så GAL-en skrur rett og slett på den komponenten som skal ha data, og så skrur den av de andre.
 
 For å progge GAL-en må du finne ut hva som skiller de ulike adressene. Binærtallene over er det som faktisk kommer ut av pinnene på ATmega162 når den sender ut adressen. Pinnen/binærsifferet helt til venstre er `1` hele tiden, så vi kan ikke skille adresser ved hjelp av dette. De tre neste bitene, derimot, kan vi bruke til å skille adressene fra hverandre. Hver gang noe sendes til OLED-command, så vil de tre bitene være `000` (se tabellen). Hver gang vi sender noe til OLED-data, så vil de tre bitene være `001`. Hver gang vi sender noe til ADC, så vil de tre bitene være `01x` (x: tilfeldig). De tre bitene av SRAM-adressene er alltid `1xx`. Med disse "reglene" kan vi skille mellom adressene til de forskjellige komponentene.
 
-Nå som vi har funnet de tre bitene vi vil bruke til å finne riktig komponent, så må de tre bitene kobles inn på GAL-en. Det mest signifikante bitet i adressene som sendes ut fra ATmega162 (altså bitet lengst til venstre i binærtallene over) sendes ut på PC3 (hvis du ser nøye etter i ATmega162-pinfiguren, så ser du at PC3 også heter A11, som er det høyeste tallet vi bruker av adressepinnene). Det nest mest signifikante bitet sendes ut på PC2 (A10), osv. Med andre ord: vi vil koble PC2-PC0 fra ATmega162 inn på GAL-en.
+Nå som vi har funnet de tre bitene vi vil bruke til å finne riktig komponent, så må de tre bitene kobles inn på GAL-en. Det mest signifikante bitet av de tre bitene vi skal bruke (altså bitet NEST lengst til venstre i binærtallene over) sendes ut fra ATmega162 på PC3 (aka A11, som er det høyeste tallet vi bruker av adressepinnene). Neste bit (aka binærsifferet til høyre for det forrige) sendes ut på PC2 (A10). Det tredje på PC1 (A9). Med andre ord: vi vil koble PC3-PC1 (A11-A9) fra ATmega162 inn på GAL-en.
 
 Pin 1-10 på GAL-en er innganger. Pin 12-19 er utganger (kanskje også pin 11, hvem vet). Så du vil koble de tre pinnene fra ATmega162 inn på for eksempel pin 1, 2 og 3 på GAL.
 
@@ -580,7 +579,7 @@ Istedenfor "din superkode her" i koden over kan du putte inn noe sånt som dette
   ram_cs <= a11;
 ~~~
 
-Det betyr rett og slett at ram_cs (altså pin 19) settes til det samme som a11 (pin 1). Forhåpentligvis har du koblet A11 (PC2) fra ATmega162 inn på pin 1 på GAL. Isåfall vil altså pin19-utgangen på GAL settes høy når addressebitet fra A11 (PC2) fra ATmega162 er høyt. Og et par avsnitt over her ble vi jo enige om at det er nettopp dét bitet som skiller SRAM-adressene fra de andre adressene.
+Det betyr rett og slett at ram_cs (altså pin 19) settes til det samme som a11 (pin 1). Forhåpentligvis har du koblet A11 fra ATmega162 inn på pin 1 på GAL. Isåfall vil altså pin19-utgangen på GAL settes høy når addressebitet fra A11 fra ATmega162 er høyt. Og et par avsnitt over her ble vi jo enige om at det er nettopp dét bitet som skiller SRAM-adressene fra de andre adressene.
 
 I forrige oppgave satte vi CS1- og CS2-inngangene på SRAM til jord og 5V midlertidig. Det er nettopp disse to inngangene som er "skru på"-inngangene til SRAM (sjekk "Truth table(1,2,3)" på andre side i SRAM-databladet). Hvis du vil at GAL-en skal skru av og på SRAM, så kan det lønne seg å koble CS2 til utgangen (pin19) på GAL. CS1 kan fortsatt kobles til jord.
 
@@ -595,7 +594,7 @@ Tilsvarende logikk gjør at vi ender opp med følgende for de andre utgangene p�
 
 Merk at noen komponenter krever at chip select (CS) settes høy når komponenten skal brukes, mens andre komponenter krever at CS settes lav når komponenten skal brukes. SRAM skal ha høy CS når den brukes. ADC skal ha lav CS når den er i bruk. Derfor er det en ekstra `NOT()` i verdien som settes til `adc_cs`. Hvis du sammenligner med tabellen over så ser du at `adc_cs <= NOT a11 AND a10;` ville gjort ADC-utgangen på GAL høy når vi skal aktivere ADC. Mens `adc_cs <= NOT (NOT a11 AND a10);` altså inverterer dette, sånn at vi får lavt signal ut når ADC skal aktiveres.
 
-Følg oppskriften i oppgaveteksten for å progge GAL-en. Mulig du må trykke på "Show obsolete devices" i ispLever hvis du ikke finner "GAL Device" under "Device family". Kjør SRAM_test()-programmet fra oppgave 2 når GAL-en er ferdigprogget og CS2 på SRAM er koblet til GAL-en.
+Følg oppskriften i oppgaveteksten for å progge GAL-en. Mulig du må trykke på "Show obsolete devices" i ispLever hvis du ikke finner "GAL Device" under "Device family". Kjør `SRAM_test()`-programmet fra oppgave 2 når GAL-en er ferdigprogget og CS2 på SRAM er koblet til GAL-en.
 
 ### Lab 3
 
@@ -650,11 +649,11 @@ Det er litt samme hvilken spenningskilde (USB eller spenningsgenerator) man bruk
 
 Analoge verdier fra joysticken kommer ut på JOY-CONN på multifunk-kortet. Man kan ganske enkelt koble JOY-CONN pin 1 og pin 2 (se kp 3.7 i P1000-userguide) til CH1 og CH2 på ADC.
 
-For å lese fra ADC må dere bruke uart, putty og SRAM_init(). Og så må dere skrive noe kode for å hente data fra ADC (lese data-koden ligner veldig på det som er i SRAM_test()).
+For å lese fra ADC må dere bruke uart, putty og `SRAM_init()`. Og så må dere skrive noe kode for å hente data fra ADC (lese data-koden ligner veldig på det som er i `SRAM_test()`).
 
 ADC funker sånn at vi først skriver en verdi til ADC som forteller ADC hvilken kanal som skal leses. Deretter leser vi. I "Table 1", side 9 i ADC-databladet ser dere hvilken verdi dere må skrive til ADC for å lese den kanalen dere vil lese.
 
-Mux mode differential tar spenningen på én kanal og trekker fra den andre. Mux mode single-ended leser bare verdien fra en kanal. Det er single-ended dere vil ha. I tabellen så ser man at for å lese CH1 single-ended, så må man skrive følgende til ADC: MA3:L, MA2:H, MA1:L, MA0:L - altså 0b0100 eller 0x04. For å lese fra CH2 single-ended må man først skrive 0x05 til ADC. Og 0x06 for CH3 og 0x07 for CH4.
+Mux mode differential tar spenningen på én kanal og trekker fra den andre. Mux mode single-ended leser bare verdien fra en kanal. Det er single-ended dere vil ha. I tabellen så ser man at for å lese CH1 single-ended, så må man skrive følgende til ADC: MA3:L, MA2:H, MA1:L, MA0:L - altså `0b0100` eller `0x04`. For å lese fra CH2 single-ended må man først skrive `0x05` til ADC. Og `0x06` for CH3 og `0x07` for CH4.
 
 Les data-koden kan se ut som noe sånt som dette:
 
@@ -717,3 +716,9 @@ Touchknapp-pinnene er rett ved slider-pinnene på PORTB og PORTD. Husk også joy
 Se en eller annen kok.
 
 ### Fortsettelse følger
+
+---
+
+TTK4155,
+Byggern,
+Industrielle og innbygde datasystemers konstruksjon.
