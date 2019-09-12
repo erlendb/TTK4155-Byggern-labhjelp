@@ -25,7 +25,9 @@ Noe feil eller kaos i denne greia som bør fikses? Send meg ei melding eller leg
 
 ## Labhjelp
 
-Generelt tips 1: Test det dere har koblet opp før dere gjør noe mer. Sett for eksempel en pin høy, og bruk multimeteret eller fyr opp oscilloskopet. Litt krøll blir mye krøll hvis dere bare knuser på uten å teste.
+**Generelt tips 1**: Test det dere har koblet opp før dere gjør noe mer. Sett for eksempel en pin høy, og bruk multimeteret eller fyr opp oscilloskopet. Litt krøll blir mye krøll hvis dere bare knuser på uten å teste.
+
+**Generelt tips 2**: Hvis dere er ganske sikre på at dere har gjort alt riktig, og koken har gjort det samme som dere (og studass ikke skjønner hva som er feil), så kan det godt hende at en av komponentene deres ikke funker. Lån naboen sin komponent og test med den, så slipper dere å bruke evig mye tid før dere skjønner at det er komponenten som er skyldig.
 
 ### Lab 1
 
@@ -502,6 +504,7 @@ Hvis du ikke får opp noe som helst i putty så har ikke putty kontakt med krets
 ##### Kjekt å lese
 
 * De første tre kapitlene av "VHDL tutorial" på https://www.seas.upenn.edu/~ese171/vhdl/vhdl_primer.html
+* Pinoversikten på første side av GAL-databladet
 
 ##### Kjekt å vite
 
@@ -522,9 +525,9 @@ OLED-command start: 0x11FF    1 000 111111111
 OLED-command slutt: 0x1000    1 000 000000000
 ~~~
 
-GAL skal altså passe på at når vi sender noe til adresser mellom `0x1FFF` og `0x1800` så går det til SRAM, når vi sender noe til `0x17FF`-`0x1400` så går det til ADC osv. Dette gjøres ved å koble adressebitene inn på GAL-en, og ved å sjekke hvilke av pinnene som er høye/lave, så finner vi ut hvilken komponent som skal ta imot data. Alle komponentene som skal ta imot data har "skru på"-innganger, så GAL-en skrur rett og slett på den komponenten som skal ha data, og så skrur den av de andre.
+GAL skal altså passe på at når vi sender noe til adresser mellom `0x1FFF` og `0x1800` så går det til SRAM, når vi sender noe til `0x17FF`-`0x1400` så går det til ADC osv. Dette gjøres ved å koble adressebitene inn på GAL-en, og ved å sjekke hvilke av pinnene som er høye/lave, så finner vi ut hvilken komponent som skal ta imot data. Alle komponentene som skal ta imot data har "skru på"-innganger (chip select aka CS), så GAL-en skrur rett og slett på den komponenten som skal ha data, og så skrur den av de andre.
 
-For å progge GAL-en må du finne ut hva som skiller de ulike adressene. Binærtallene over er det som faktisk kommer ut av pinnene på ATmega162 når den sender ut adressen. Pinnen/binærsifferet helt til venstre er `1` hele tiden, så vi kan ikke skille adresser ved hjelp av dette. De tre neste bitene, derimot, kan vi bruke til å skille adressene fra hverandre. Det er åpenbart (:)) at hver gang noe sendes til OLED-command, så vil de tre bitene være `000`. Hver gang vi sender noe til OLED-data, så vil de tre bitene være `001`. Hver gang vi sender noe til ADC, så vil de tre bitene være `01x` (x: tilfeldig). De tre bitene av SRAM-adressene er alltid `1xx`. Med disse "reglene" kan vi skille mellom adressene til de forskjellige komponentene.
+For å progge GAL-en må du finne ut hva som skiller de ulike adressene. Binærtallene over er det som faktisk kommer ut av pinnene på ATmega162 når den sender ut adressen. Pinnen/binærsifferet helt til venstre er `1` hele tiden, så vi kan ikke skille adresser ved hjelp av dette. De tre neste bitene, derimot, kan vi bruke til å skille adressene fra hverandre. Hver gang noe sendes til OLED-command, så vil de tre bitene være `000` (se tabellen). Hver gang vi sender noe til OLED-data, så vil de tre bitene være `001`. Hver gang vi sender noe til ADC, så vil de tre bitene være `01x` (x: tilfeldig). De tre bitene av SRAM-adressene er alltid `1xx`. Med disse "reglene" kan vi skille mellom adressene til de forskjellige komponentene.
 
 Nå som vi har funnet de tre bitene vi vil bruke til å finne riktig komponent, så må de tre bitene kobles inn på GAL-en. Det mest signifikante bitet i adressene som sendes ut fra ATmega162 (altså bitet lengst til venstre i binærtallene over) sendes ut på PC3 (hvis du ser nøye etter i ATmega162-pinfiguren, så ser du at PC3 også heter A11, som er det høyeste tallet vi bruker av adressepinnene). Det nest mest signifikante bitet sendes ut på PC2 (A10), osv. Med andre ord: vi vil koble PC2-PC0 fra ATmega162 inn på GAL-en.
 
@@ -580,7 +583,7 @@ Det betyr rett og slett at ram_cs (altså pin 19) settes til det samme som a11 (
 
 I forrige oppgave satte vi CS1- og CS2-inngangene på SRAM til jord og 5V midlertidig. Det er nettopp disse to inngangene som er "skru på"-inngangene til SRAM (sjekk "Truth table(1,2,3)" på andre side i SRAM-databladet). Hvis du vil at GAL-en skal skru av og på SRAM, så kan det lønne seg å koble CS2 til utgangen (pin19) på GAL. CS1 kan fortsatt kobles til jord.
 
-Tilsvarende logikk gjør at vi ender opp med følgende for de andre utgangene på GAL.
+Tilsvarende logikk gjør at vi ender opp med følgende for de andre utgangene på GAL:
 
 ~~~vhdl
   ram_cs <= a11;
@@ -589,6 +592,17 @@ Tilsvarende logikk gjør at vi ender opp med følgende for de andre utgangene p�
   oled_dc <= NOT a11 AND NOT a10 AND a9;
 ~~~
 
+Merk at noen komponenter krever at chip select (CS) settes høy når komponenten skal brukes, mens andre komponenter krever at CS settes lav når komponenten skal brukes. SRAM skal ha høy CS når den brukes. ADC skal ha lav CS når den er i bruk. Derfor er det en ekstra `NOT()` i verdien som settes til `adc_cs`. Hvis du sammenligner med tabellen over så ser du at `adc_cs <= NOT a11 AND a10;` ville gjort ADC-utgangen på GAL høy når vi skal aktivere ADC. Mens `adc_cs <= NOT (NOT a11 AND a10);` altså inverterer dette, sånn at vi får lavt signal ut når ADC skal aktiveres.
+
 Følg oppskriften i oppgaveteksten for å progge GAL-en. Mulig du må trykke på "Show obsolete devices" i ispLever hvis du ikke finner "GAL Device" under "Device family". Kjør SRAM_test()-programmet fra oppgave 2 når GAL-en er ferdigprogget og CS2 på SRAM er koblet til GAL-en.
+
+### Lab 3
+
+#### Oppgave 1
+
+##### Verdt å lese
+
+##### Verdt å vite
+
 
 ### Fortsettelse følger
