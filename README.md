@@ -17,9 +17,7 @@
 
 ## Hva er dette?
 
-Dette er den byggernhjelpen jeg skulle ønske jeg hadde hatt selv. Hvis du er ute etter ekte kok så finnes det evige mengder på Github (søk på fagkoden), mens dette er mer et forsøk på å gjøre det litt mindre kuk å gjennomføre (og forstå) byggernlab. Det er så mange ting i byggern man kan bruke evig mange timer på å finne ut av, og så viser det seg at løsningen var veldig enkel, så tanken er at fremtidige byggere kan spare litt (mye) tid og frustrasjon ved å kikke litt i denne greia her mens man surrer seg gjennom laben.
-
-Før du begynner på en oppgave anbefaler jeg sterkt at du **skummer hele "kjekt å vite"** for den oppgaven du skal gjøre og at du **skummer raskt gjennom alt "kjekt å lese"** før du begynner på oppgaven.
+Dette er den byggernhjelpen jeg skulle ønske jeg hadde hatt selv. Lykke til :)
 
 Noe feil eller kaos i denne greia som bør fikses? Send meg ei melding eller legg inn en pull request.
 
