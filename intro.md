@@ -19,10 +19,10 @@
 
 Dette er den byggernhjelpen jeg skulle ønske jeg hadde hatt selv. Lykke til :)
 
-Noe feil eller kaos i denne greia som bør fikses? Send meg ei melding eller legg inn en pull request.
+Noe feil i denne greia som bør fikses? Send meg ei melding, eller legg inn en issue eller en pull request.
 
 ## Labhjelp
 
-**Generelt tips 1**: Test det dere har koblet opp før dere gjør noe mer. Sett for eksempel en pin høy, og bruk multimeteret eller fyr opp oscilloskopet. Litt krøll blir mye krøll hvis dere bare knuser på uten å teste.
+**Supertips 1**: Hvis dere er ganske sikre på at dere har gjort alt riktig, og koken har gjort det samme som dere (og studass ikke skjønner hva som er feil), så kan det godt hende at en av komponentene deres ikke funker. Lån naboen sin komponent og test med den, så slipper dere å bruke evig mye tid før dere skjønner at det er komponenten som er skyldig.
 
-**Generelt tips 2**: Hvis dere er ganske sikre på at dere har gjort alt riktig, og koken har gjort det samme som dere (og studass ikke skjønner hva som er feil), så kan det godt hende at en av komponentene deres ikke funker. Lån naboen sin komponent og test med den, så slipper dere å bruke evig mye tid før dere skjønner at det er komponenten som er skyldig.
+**Supertips 2**: Når dere har koblet opp noe og testet at det funker, så klipper dere kanskje til noen nye ledninger og kobler om sånn at brødbrettet ser pent ut. Her er det fort gjort å gjøre feil. Og hvis dere kobler én ledning én plass feil når dere kobler om, så risikerer dere å bruke et par timer på å finne feilen. Så gjør det riktig :).
