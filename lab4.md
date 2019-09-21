@@ -212,7 +212,7 @@ Da kan man skrive tekst til OLED-skjermen ved å bruke `oled_print("Livet er et 
 
 Finn en bra kok :)
 
-Stikkord for å mekke selv: menyelement-struct med felter for menytittel, funksjonspeker, array av pekere til undermenyelementer, og peker til "overmenyen" (altså menyen man kom fra hvis dette elementet er en undermeny).
+Stikkord for å mekke meny selv: menyelement-struct med felter for menytittel, funksjonspeker, array av pekere til undermenyelementer, og peker til "overmenyen" (altså menyen man kom fra hvis dette elementet er en undermeny).
 
 Hvis man er i en meny og velger et menyelement som ikke har en undermeny, så kalles funksjonen som funksjonspekeren peker til.
 

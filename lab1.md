@@ -8,7 +8,6 @@
 
 ##### Kjekt å vite
 
-
 Ta utgangspunkt i "Figure 3 - breadboard" fra oppgaveteksten. Det har ikke noe å si om dere har fire rader på breadboardet istedenfor tre eller om spenningskontaktene på siden står motsatt vei.
 
 Det kan lønne seg å begynne med å plassere alt sånn som det er vist i "Figure 5" fra oppgaveteksten. Da slipper dere å rive opp alt dere har koblet senere fordi dere må få plass til en ny komponent :).
@@ -91,7 +90,7 @@ Hvis du bruker overgangen istedenfor å koble direkte skal du gjøre akkurat det
 * "Register Summary", side 304 i ATmega162-databladet kan være kjekt å ha i bakhånd. Når du har kokt litt kode fra oppgavetekst, labforelesning eller databladet og du får feilmeldinger, er det ofte fordi registrene i koden ikke finnes på ATmega162-en. Ofte fordi f.eks. MCUCR heter MCUC0R i stedet. Da kan du finne de riktige registernavnene under "Register Summary" (eller bare ctrl+f registeret i databladet).
 * "I/O ports", side 62 i ATmega162-databladet. Mye bra info på side 62-64.
 * "Register descriptions for I/O ports", side 82 i ATmega162-databladet. Ikke stirr for mye på dette, da blir du unødvendig forvirra.
-* Alle "C Code Example"-ene. Det er 22 sånne i ATmega162-databladet. Bare skum gjennom alle (ikke tenk på å forstå det). Da får du et inntrykk av hvordan man progger greia.
+* "C Code Example"-ene i ATmega162-databladet. Det er 22 sånne der, bare skum gjennom noen. Da får du et inntrykk av hvordan man progger greia.
 
 
 ##### Kjekt å vite

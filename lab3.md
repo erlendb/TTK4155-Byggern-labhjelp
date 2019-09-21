@@ -95,7 +95,7 @@ Sjekk "Timing diagrams" i ADC-databladet for å forstå hvordan ting funker i AD
 
 ##### Verdt å vite
 
-Pin 1 (helt til venstre) på PORTB og pin 5 (midten) på PORTD. Sjekk med oscilloskopet for sikkerhets skyld :).
+Pin 1 (?) (helt til venstre) på PORTB og pin 5 (?) (midten) på PORTD. Sjekk med oscilloskopet for sikkerhets skyld :).
 
 #### Oppgave 5
 
