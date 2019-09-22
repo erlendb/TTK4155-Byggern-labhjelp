@@ -1,6 +1,25 @@
 ### Lab 2
 
-#### Oppgave 1
+Hvis du ikke er helt stødig på bitoperasjoner i C, så kan det være en fordel å lese litt på det. De viktigste greiene er kanskje disse:
+
+~~~
+// Setter bit uten å bry oss om hva som var lagret fra før
+uint8_t byte = 0b1010 1010;
+byte = (1 << 2); // gir byte: 0b0000 0100
+byte = (1 << 2)|(1 << 4); // gir byte: 0b0001 0100
+
+// Setter bit uten å påvirke resten av byten
+uint8_t byte = 0b1010 1010;
+byte |= (1 << 2); // gir byte: 0b1010 1110
+byte |= (1 << 2)|(1 << 4); // gir byte: 0b1011 1110
+
+// Sjekker en bit på gitt plass i byten
+uint8_t byte = 0b1010 1010;
+bit = (byte & (1 << 2)); // gir bit: 0
+bit = (byte & (1 << 3)); // gir bit: 1
+~~~
+
+#### L2 Oppgave 1
 
 ##### Kjekt å lese
 
@@ -48,7 +67,7 @@ int main() {
 }
 ~~~
 
-#### Oppgave 2
+#### L2 Oppgave 2
 
 ##### Kjekt å lese
 
@@ -154,7 +173,7 @@ Hvis du ikke får opp noe som helst i putty så har ikke putty kontakt med krets
 
 (Du trenger ikke å definere ALE som utgang (`DDRE = 0b10`) i SRAM-testprogrammet.)
 
-#### Oppgave 3
+#### L2 Oppgave 3
 
 ##### Kjekt å lese
 

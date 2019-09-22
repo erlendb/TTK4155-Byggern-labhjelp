@@ -1,10 +1,10 @@
 ### Lab 4
 
-#### Oppgave 1
+#### L4 Oppgave 1
 
-Hvis dere har koblet opp og progget GALen som beskrevet i [lab 2 oppgave3](#oppgave-3-1) så er alt good :).
+Hvis dere har koblet opp og progget GALen som beskrevet i [lab 2 oppgave 3](lab2.md#l2-oppgave-3) så er alt good :).
 
-#### Oppgave 2
+#### L4 Oppgave 2
 
 ##### Verdt å lese
 
@@ -20,11 +20,11 @@ CS og D/C på OLED går rett til tilsvarende utganger på GALen.
 
 WR (aka R/W) på OLED kan kobles rett på WR på ATmega162. Forklaring: I oppgaveteksten står det at OLEDen er hardvarekonfigurert til 8080-modus. I "Figure 7-2" i kp. 7.1.2 i SSD1780-databladet kan man se at data blir skrevet til OLEDen på rising edge på WR-signalet. Med andre ord kommer alt til å funke så lenge det fortsatt er data ute på databussen på det tidspunktet WR går fra lav til høy. I ATmega162-databladet i "Figure 13" ser man at ATmega162 sender data ut på databussen, og så blir WR lav, og så blir WR høy, og så slutter den å sende data. Altså er det fortsatt data på databussen når WR går fra lav til høy. Og derfor funker det å koble WR rett på WR :).
 
-#### Oppgave 3
+#### L4 Oppgave 3
 
 Ja nei si det.
 
-#### Oppgave 4
+#### L4 Oppgave 4
 
 ##### Verdt å lese
 
@@ -145,11 +145,11 @@ for (int line = 0; line < 8; line++) {
 }
 ~~~
 
-#### Oppgave 5
+#### L4 Oppgave 5
 
 Last ned *fonts.h* fra Blackboard. Trenger ikke gjøre noe mer.
 
-#### Oppgave 6
+#### L4 Oppgave 6
 
 Vi droppet å bruke `printf()` og laget heller en egen `oled_print()`. Hvis man stirrer litt på innholdet i *fonts.h*, så skjønner man kanskje at hvert element i font-arrayet inneholder noen byte-elementer som til sammen utgjør en bokstav. For eksempel "A", hentet fra font8-variablen:
 
@@ -208,9 +208,7 @@ void oled_print(char c[]) {
 
 Da kan man skrive tekst til OLED-skjermen ved å bruke `oled_print("Livet er et kaffe")`.
 
-#### Oppgave 7
-
-Finn en bra kok :)
+#### L4 Oppgave 7
 
 Stikkord for å mekke meny selv: menyelement-struct med felter for menytittel, funksjonspeker, array av pekere til undermenyelementer, og peker til "overmenyen" (altså menyen man kom fra hvis dette elementet er en undermeny).
 
@@ -224,4 +222,77 @@ Om man gjør det på en sånn-ish måte så kan man ha evig mange menyelementer 
 
 Og så trenger man noe greier for å finne ut hvilken retning joysticken beveges. Lag en funksjon som finner ut hvilken retning (x eller y) som har størst utslag i positiv eller negativ retning, deretter finn ut om utslaget i en av retningene er større enn et eller annet tall. Så returnerer dere en enum-verdi (eller bare en int) når dere vet hvilken retning joysticken presses i.
 
-### Fortsettelse følger
+Menyelement-structen vår ser sånn her ut:
+
+~~~c
+#define MAX_SUBMENUS 10 // Må settes til det høyeste antall menyelementer man har tenkt til å ha i samme meny
+typedef struct Menu {
+	char * text; // Teksten/tittelen til menyelementet
+	void (*function)(); // Peker til funksjonen som skal kalles hvis det ikke finnes noen undermeny
+	struct Menu * parent; // Pappameny :)
+	struct Menu * subMenu[MAX_SUBMENUS]; // Undermeny. Array av pekere til menyelementer
+} menu_t, *menu_ptr;
+~~~
+
+Da kan vi initialisere en tom meny med noe sånt som det under. Her lager vi bare et helt tomt menyelement. Tanken er at de menyelementene som vises når man starter menyen, er undermenyelementene til denne tomme menyen.
+
+~~~c
+menu_ptr menu = malloc(sizeof(menu_t));
+~~~
+
+Nå trengs en funksjon for å legge til undermenyelementer. Undermenyelementene skal ikke være tomme, de skal inneholde tittel, funksjonspeker, peker til pappamenyen, og evt. et array av pekere til undermenyelementer.
+
+Funksjonen `menu_add()` under tar inn argumentene tittel, peker til foreldremenyen og funksjonspeker, og så opprettes et menyelement med verdier fra argumentene. Deretter blir en peker til menyelementet lagt til på slutten av foreldremenyen sitt undermeny-array.
+
+~~~c
+menu_ptr menu_add(menu_ptr parent, char * text, void (*function)()) {
+	menu_ptr subMenu = malloc(sizeof(menu_t)); // Oppretter tomt undermenyelement
+	subMenu->text = text; // Setter inn tittel
+	subMenu->function = function; // Setter inn peker til funksjon
+	subMenu->parent = parent; // Setter inn peker til foreldremenyen
+
+	// Legger undermenyelementet til slutten av undermeny-arrayet til foreldremenyen
+	int i = 0;
+	while (parent->subMenu[i] != NULL) {
+		i++;
+	}
+	parent->subMenu[i] = subMenu;
+
+	return subMenu; // Returnerer en peker til undermenyelementet vi har opprettet
+}
+~~~
+
+Kult. Nå kan vi lage en meny. For å lage en meny med to elementer, hvor det ene elementet utfører en funksjon og det andre elementet går til en annen undermeny med tre elementer så kan man gjøre sånn her:
+
+~~~c
+menu_ptr menu = malloc(sizeof(menu_t)); // Selve menyen initialiseres
+
+// Undermenyelementer til menu. Disse fungerer som hovedmeny
+// Legg merke til at "Spill et spill"-menyyen får funksjonspeker NULL fordi denne skal ha en undermeny
+menu_ptr menu_highscore = menu_add(menu, "Vis highscore", &show_highscore);
+menu_ptr menu_play = menu_add(menu, "Spill et spill", NULL);
+
+// Undermenyelementer til "Spill et spill"-menyen. Hvert element peker til en funksjon som starter et spill
+menu_ptr menu_game1 = menu_add(menu_play, "Spill 1", &play_game1);
+menu_ptr menu_game2 = menu_add(menu_play, "Spill 2", &play_game2);
+menu_ptr menu_game3 = menu_add(menu_play, "Spill 3", &play_game3);
+
+// Funksjonene som blir kalt når man trykker på riktig menyelement
+void show_highscore() { /* Viser highscore */ }
+void play_game1() { /* Spiller spill 1 */ }
+void play_game2() { /* Spiller spill 2 */ }
+void play_game3() { /* Spiller spill 3 */ }
+~~~
+
+Med greiene over får vi altså en meny som ser ut som dette:
+
+~~~
+"Vis highscore"  -> show_highscore();
+"Spill et spill" -> "Spill 1" -> play_game1();
+                    "Spill 2" -> play_game1();
+                    "Spill 3" -> play_game1();
+~~~
+
+Og på samme måte kan legge til undermenyelementer til for eksempel "Spill 2"-menyen og enda en undermeny under der igen og så videre.
+
+Det vi har nå er altså en masse structer som peker til hverandre. Det som står igjen nå er logikk for å navigere mellom structene og for å vise elementene som er i en meny. Skriver kanskje litt om det sånn etterhvert en gang

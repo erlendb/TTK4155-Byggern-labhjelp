@@ -1,6 +1,6 @@
 ### Lab 1
 
-#### Oppgave 1
+#### L1 Oppgave 1
 
 ##### Kjekt å lese
 
@@ -16,7 +16,7 @@ Spenningsregulatoren LM7805 skal kobles opp sånn som det står til høyre på f
 
 Hvis dere kobler høy spenning (10-12 V) rett inn på komponentene deres, så risikerer dere å ødelegge komponentene. Om dere gjør det er det bare å hente ny komponent, men det er like greit å bare ikke drepe komponentene. Så jeg anbefaler alle å ha forsyningsspenning (10-12V) på én av spenningslinjene på breadboardet, og så sette opp 5V på alle de andre spenningslinjene med én gang. (Vi klarte å koble SRAM-brikken til 10V og brukte litt tid på å finne ut om den fortsatt funket.)
 
-#### Oppgave 2
+#### L1 Oppgave 2
 
 ##### Kjekt å lese
 
@@ -29,7 +29,7 @@ Hvis dere kobler høy spenning (10-12 V) rett inn på komponentene deres, så ri
 
 "Decoupling capacitor" kan være 100 µF (?). Kobles mellom pin 1 (VCC) på ATmega162 og jord.
 
-#### Oppgave 3
+#### L1 Oppgave 3
 
 ##### Kjekt å lese
 
@@ -44,7 +44,7 @@ Punktet der det står "RESET" i "Figure 2-3" skal kobles på der det står "Rese
 
 Reset på ATmega162 er pin 9.
 
-#### Oppgave 4
+#### L1 Oppgave 4
 
 ##### Kjekt å lese
 
@@ -55,7 +55,7 @@ Reset på ATmega162 er pin 9.
 
 Krystallen dere skal bruke er en av de to små sølvfargede rare greiene. De har ulike frekvenser, og frekvensen på krystallen står på toppen av den. Den som det står 4.9152 på skal kobles mellom pin 19 (XTAL1) og pin 18 (XTAL2) på ATmega162. Og så kondensatorer fra hvert bein på krystallen til jord.
 
-#### Oppgave 5
+#### L1 Oppgave 5
 
 ##### Kjekt å lese
 
@@ -81,7 +81,7 @@ Greia her er at tabellen på side 14 forteller hva Atmel-ICE spytter ut gjennom 
 
 Hvis du bruker overgangen istedenfor å koble direkte skal du gjøre akkurat det samme, men du må bruke tabellen og figuren på side 20 istedenfor. En ganske funky ting med "Figure 4-2" er at figuren er speilvendt-ish. Så hvis du ikke får ting til å funke kan du løse det ved å flippe figuren (altså bytte om kolonne 1 og 2).
 
-#### Oppgave 6
+#### L1 Oppgave 6
 
 ##### Kjekt å lese
 
@@ -151,7 +151,7 @@ sudo make flash
 
 Gratulerer, du har nå programmert ATmega162! Sjekk at de riktige pinnene ble satt høye (5V) og lave (0V) med multimeter eller oscilloskopet :).
 
-#### Oppgave 7
+#### L1 Oppgave 7
 
 ##### Kjekt å lese
 
@@ -167,7 +167,7 @@ Nå skal T1_in og R1_out på MAX kobles til henholdsvis TXD og RXD på ATmega162
 
 Så skal T1_out og R1_in på MAX kobles til henholdsvis Transmit (pin 3) og Receive (pin 2) på seriellkontakten. I tillegg skal Signal ground (pin 5) på seriellkontakten kobles til jord. Sjekk "Figure 10" på side 25 i oppgaveteksten for å finne riktige pinner på seriellkontakten. Obs! Det er lett å få dette speilvendt. Hvis det ikke funker, så er pin 5 den pinnen som du trodde var pin 1 osv.
 
-#### Oppgave 8
+#### L1 Oppgave 8
 
 ##### Kjekt å lese
 
@@ -209,7 +209,7 @@ unsigned char uart_Receive( void ){
 
 Her ser dere at vi (til forskjell fra eksempelkodesnuttene i ATmega162-databladet) har puttet inn 0-tall i alle greiene. URSEL ble til URSEL0 osv. Hvis dere er ivrige etter mer info om akkurat det så går det an å søke i ATmega162-databladet etter f.eks. "UCSR0A" så kommer du til side 305 der du har en oversikt over hvilke registre som finnes på ATmega162.
 
-#### Oppgave 9
+#### L1 Oppgave 9
 
 ##### Kjekt å lese
 
@@ -243,7 +243,7 @@ Putty kan startes via grafisk grensesnitt eller med `putty -serial /dev/ttyS0 -s
 
 Hvis du ikke får opp "aaaaaaaaa..." i putty nå, så er det noe feil et sted. En grei måte å feilsøke på er å bruke oscilloskopet. Sjekk pinnen på ATmega162 som skal sende ut bokstaven. Prøv å kjøre programmet med og uten sending av 'a' sånn at du vet om prosessoren sender. Bruk oscilloskopet på MAX-en også. Og ved seriellkontakten. Hvis alt ser greit ut fram til seriellkontakten, så kan det tenkes at dere har koblet seriellkontakten motsatt av det som er rett.
 
-#### Oppgave 10
+#### L1 Oppgave 10
 
 ##### Kjekt å lese
 
@@ -291,9 +291,7 @@ int uart_receive(FILE * file){
 
 Funksjonene er de samme, forskjellen er returtype `int`, at `uart_transmit()` returnerer `0`, og at begge funksjoner har fått et argument av typen `FILE*` som ikke gjør noe. Husk å oppdatere headerfila også.
 
-#### Oppgave 11
-
-##### Kjekt å vite
+#### L1 Oppgave 11
 
 Nå kan *main.c* oppdateres til følgende:
 

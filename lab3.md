@@ -1,6 +1,6 @@
 ### Lab 3
 
-#### Oppgave 1
+#### L3 Oppgave 1
 
 ##### Verdt å lese
 
@@ -26,7 +26,7 @@ DB0-DB7 på ADC er datautganger og skal kobles på de samme datainngangene på A
 
 ADC har en innebygd latch. Så det som skjer når ATmega162 skal hente ut verdier fra ADC er følgende: ATmega162 sender ut en adresse til ADC. ADC lagrer adressen i latchen. ATmega162 begynner å lese fra ADC. ADC bruker adressen i latchen til å finne ut hva den skal sende til ATmega162.
 
-#### Oppgave 2
+#### L3 Oppgave 2
 
 ##### Verdt å lese
 
@@ -38,7 +38,7 @@ I oppgaven står det "Make sure the jumper across “EXTSEL” is connected". Fo
 
 Det er litt samme hvilken spenningskilde (USB eller spenningsgenerator) man bruker til multifunk-kortet. Vi valgte å koble til den samme spenningen som breadboardet får fra spenningsgeneratoren for å få felles jord.
 
-#### Oppgave 3
+#### L3 Oppgave 3
 
 ##### Verdt å lese
 
@@ -91,13 +91,11 @@ while(1) {
 
 Sjekk "Timing diagrams" i ADC-databladet for å forstå hvordan ting funker i ADCen. WR- og RD-signal fikser ATmega162 på egenhånd. Legg merke til aktiv lav CS. Hvis dere vil bruke interrupts så ser dere at INTR-utgangen på ADC blir høy etter at ADC har mottatt adressen fra ATmega162. Da kan INTR gi signal til ATmega162 om at ATmega162 kan begynne å lese data fra ADC.
 
-#### Oppgave 4
-
-##### Verdt å vite
+#### L3 Oppgave 4
 
 Pin 1 (?) (helt til venstre) på PORTB og pin 5 (?) (midten) på PORTD. Sjekk med oscilloskopet for sikkerhets skyld :).
 
-#### Oppgave 5
+#### L3 Oppgave 5
 
 ##### Verdt å lese
 
@@ -107,12 +105,10 @@ Pin 1 (?) (helt til venstre) på PORTB og pin 5 (?) (midten) på PORTD. Sjekk me
 
 Sliderutgangene på PORTB og PORTD skal bare rett inn på FILTER-inngangene. FILTER-utgangene kobles på CH3 og CH4 på ADC.
 
-#### Oppgave 6
-
-##### Verdt å vite
+#### L3 Oppgave 6
 
 Touchknapp-pinnene er rett ved slider-pinnene på PORTB og PORTD. Husk også joystick-knappen på JOY-CONN pin 3. Vi koblet de tre knappene inn på PB0-PB2 på ATmega162.
 
-#### Oppgave 7-8
+#### L3 Oppgave 7-8
 
 Se en eller annen kok.

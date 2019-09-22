@@ -1,27 +1,32 @@
 # Byggmester Bob
 
 > Man bruker 15 timer hver uke på lab. Minst!
-> &mdash; <cite>Student (23)</cite>
+> &mdash; *Student (23)*
 
 > Velg romtek
-> &mdash; <cite>Student (22)</cite>
+> &mdash; *Student (22)*
 
 > Ingen skjønner noenting. Ikke studassene heller
-> &mdash; <cite>Emneansvarlig (47)</cite>
+> &mdash; *Emneansvarlig (47)*
 
 > Sorry gutta, jeg aner ikke hvorfor det ikke funker
-> &mdash; <cite>Studass (24)</cite>
+> &mdash; *Studass (24)*
 
-> Kan det fikses? Vet ikke helt jeg
-> &mdash; <cite>Byggmester (33) etter et semester med byggern</cite>
+> Just do it as described in the datasheet
+> &mdash; *Oppgaveteksten*
 
-## Hva er dette?
-
+\
 Dette er den byggernhjelpen jeg skulle ønske jeg hadde hatt selv. Lykke til :)
 
 Noe feil i denne greia som bør fikses? Send meg ei melding, eller legg inn en issue eller en pull request.
 
 ## Labhjelp
+
+Hele labhjelpen finner du [på forsiden](https://github.com/erlendb/TTK4155-Byggern-labhjelp). \
+Lab 1 finnes i [lab1.md](lab1.md). \
+Lab 2 finnes i [lab2.md](lab2.md). \
+Lab 3 finnes i [lab3.md](lab3.md). \
+Lab 4 finnes i [lab4.md](lab4.md).
 
 **Supertips 1**: Hvis dere er ganske sikre på at dere har gjort alt riktig, og koken har gjort det samme som dere (og studass ikke skjønner hva som er feil), så kan det godt hende at en av komponentene deres ikke funker. Lån naboen sin komponent og test med den, så slipper dere å bruke evig mye tid før dere skjønner at det er komponenten som er skyldig.
 
@@ -29,7 +34,7 @@ Noe feil i denne greia som bør fikses? Send meg ei melding, eller legg inn en i
 
 ### Lab 1
 
-#### Oppgave 1
+#### L1 Oppgave 1
 
 ##### Kjekt å lese
 
@@ -45,7 +50,7 @@ Spenningsregulatoren LM7805 skal kobles opp sånn som det står til høyre på f
 
 Hvis dere kobler høy spenning (10-12 V) rett inn på komponentene deres, så risikerer dere å ødelegge komponentene. Om dere gjør det er det bare å hente ny komponent, men det er like greit å bare ikke drepe komponentene. Så jeg anbefaler alle å ha forsyningsspenning (10-12V) på én av spenningslinjene på breadboardet, og så sette opp 5V på alle de andre spenningslinjene med én gang. (Vi klarte å koble SRAM-brikken til 10V og brukte litt tid på å finne ut om den fortsatt funket.)
 
-#### Oppgave 2
+#### L1 Oppgave 2
 
 ##### Kjekt å lese
 
@@ -58,7 +63,7 @@ Hvis dere kobler høy spenning (10-12 V) rett inn på komponentene deres, så ri
 
 "Decoupling capacitor" kan være 100 µF (?). Kobles mellom pin 1 (VCC) på ATmega162 og jord.
 
-#### Oppgave 3
+#### L1 Oppgave 3
 
 ##### Kjekt å lese
 
@@ -73,7 +78,7 @@ Punktet der det står "RESET" i "Figure 2-3" skal kobles på der det står "Rese
 
 Reset på ATmega162 er pin 9.
 
-#### Oppgave 4
+#### L1 Oppgave 4
 
 ##### Kjekt å lese
 
@@ -84,7 +89,7 @@ Reset på ATmega162 er pin 9.
 
 Krystallen dere skal bruke er en av de to små sølvfargede rare greiene. De har ulike frekvenser, og frekvensen på krystallen står på toppen av den. Den som det står 4.9152 på skal kobles mellom pin 19 (XTAL1) og pin 18 (XTAL2) på ATmega162. Og så kondensatorer fra hvert bein på krystallen til jord.
 
-#### Oppgave 5
+#### L1 Oppgave 5
 
 ##### Kjekt å lese
 
@@ -110,7 +115,7 @@ Greia her er at tabellen på side 14 forteller hva Atmel-ICE spytter ut gjennom 
 
 Hvis du bruker overgangen istedenfor å koble direkte skal du gjøre akkurat det samme, men du må bruke tabellen og figuren på side 20 istedenfor. En ganske funky ting med "Figure 4-2" er at figuren er speilvendt-ish. Så hvis du ikke får ting til å funke kan du løse det ved å flippe figuren (altså bytte om kolonne 1 og 2).
 
-#### Oppgave 6
+#### L1 Oppgave 6
 
 ##### Kjekt å lese
 
@@ -180,7 +185,7 @@ sudo make flash
 
 Gratulerer, du har nå programmert ATmega162! Sjekk at de riktige pinnene ble satt høye (5V) og lave (0V) med multimeter eller oscilloskopet :).
 
-#### Oppgave 7
+#### L1 Oppgave 7
 
 ##### Kjekt å lese
 
@@ -196,7 +201,7 @@ Nå skal T1_in og R1_out på MAX kobles til henholdsvis TXD og RXD på ATmega162
 
 Så skal T1_out og R1_in på MAX kobles til henholdsvis Transmit (pin 3) og Receive (pin 2) på seriellkontakten. I tillegg skal Signal ground (pin 5) på seriellkontakten kobles til jord. Sjekk "Figure 10" på side 25 i oppgaveteksten for å finne riktige pinner på seriellkontakten. Obs! Det er lett å få dette speilvendt. Hvis det ikke funker, så er pin 5 den pinnen som du trodde var pin 1 osv.
 
-#### Oppgave 8
+#### L1 Oppgave 8
 
 ##### Kjekt å lese
 
@@ -238,7 +243,7 @@ unsigned char uart_Receive( void ){
 
 Her ser dere at vi (til forskjell fra eksempelkodesnuttene i ATmega162-databladet) har puttet inn 0-tall i alle greiene. URSEL ble til URSEL0 osv. Hvis dere er ivrige etter mer info om akkurat det så går det an å søke i ATmega162-databladet etter f.eks. "UCSR0A" så kommer du til side 305 der du har en oversikt over hvilke registre som finnes på ATmega162.
 
-#### Oppgave 9
+#### L1 Oppgave 9
 
 ##### Kjekt å lese
 
@@ -272,7 +277,7 @@ Putty kan startes via grafisk grensesnitt eller med `putty -serial /dev/ttyS0 -s
 
 Hvis du ikke får opp "aaaaaaaaa..." i putty nå, så er det noe feil et sted. En grei måte å feilsøke på er å bruke oscilloskopet. Sjekk pinnen på ATmega162 som skal sende ut bokstaven. Prøv å kjøre programmet med og uten sending av 'a' sånn at du vet om prosessoren sender. Bruk oscilloskopet på MAX-en også. Og ved seriellkontakten. Hvis alt ser greit ut fram til seriellkontakten, så kan det tenkes at dere har koblet seriellkontakten motsatt av det som er rett.
 
-#### Oppgave 10
+#### L1 Oppgave 10
 
 ##### Kjekt å lese
 
@@ -320,9 +325,7 @@ int uart_receive(FILE * file){
 
 Funksjonene er de samme, forskjellen er returtype `int`, at `uart_transmit()` returnerer `0`, og at begge funksjoner har fått et argument av typen `FILE*` som ikke gjør noe. Husk å oppdatere headerfila også.
 
-#### Oppgave 11
-
-##### Kjekt å vite
+#### L1 Oppgave 11
 
 Nå kan *main.c* oppdateres til følgende:
 
@@ -344,7 +347,26 @@ Kompiler og last opp til mikrokontrolleren. Kjør putty på PCen. Nå vil det (f
 
 ### Lab 2
 
-#### Oppgave 1
+Hvis du ikke er helt stødig på bitoperasjoner i C, så kan det være en fordel å lese litt på det. De viktigste greiene er kanskje disse:
+
+~~~
+// Setter bit uten å bry oss om hva som var lagret fra før
+uint8_t byte = 0b1010 1010;
+byte = (1 << 2); // gir byte: 0b0000 0100
+byte = (1 << 2)|(1 << 4); // gir byte: 0b0001 0100
+
+// Setter bit uten å påvirke resten av byten
+uint8_t byte = 0b1010 1010;
+byte |= (1 << 2); // gir byte: 0b1010 1110
+byte |= (1 << 2)|(1 << 4); // gir byte: 0b1011 1110
+
+// Sjekker en bit på gitt plass i byten
+uint8_t byte = 0b1010 1010;
+bit = (byte & (1 << 2)); // gir bit: 0
+bit = (byte & (1 << 3)); // gir bit: 1
+~~~
+
+#### L2 Oppgave 1
 
 ##### Kjekt å lese
 
@@ -392,7 +414,7 @@ int main() {
 }
 ~~~
 
-#### Oppgave 2
+#### L2 Oppgave 2
 
 ##### Kjekt å lese
 
@@ -498,7 +520,7 @@ Hvis du ikke får opp noe som helst i putty så har ikke putty kontakt med krets
 
 (Du trenger ikke å definere ALE som utgang (`DDRE = 0b10`) i SRAM-testprogrammet.)
 
-#### Oppgave 3
+#### L2 Oppgave 3
 
 ##### Kjekt å lese
 
@@ -597,7 +619,7 @@ Følg oppskriften i oppgaveteksten for å progge GAL-en. Mulig du må trykke på
 
 ### Lab 3
 
-#### Oppgave 1
+#### L3 Oppgave 1
 
 ##### Verdt å lese
 
@@ -623,7 +645,7 @@ DB0-DB7 på ADC er datautganger og skal kobles på de samme datainngangene på A
 
 ADC har en innebygd latch. Så det som skjer når ATmega162 skal hente ut verdier fra ADC er følgende: ATmega162 sender ut en adresse til ADC. ADC lagrer adressen i latchen. ATmega162 begynner å lese fra ADC. ADC bruker adressen i latchen til å finne ut hva den skal sende til ATmega162.
 
-#### Oppgave 2
+#### L3 Oppgave 2
 
 ##### Verdt å lese
 
@@ -635,7 +657,7 @@ I oppgaven står det "Make sure the jumper across “EXTSEL” is connected". Fo
 
 Det er litt samme hvilken spenningskilde (USB eller spenningsgenerator) man bruker til multifunk-kortet. Vi valgte å koble til den samme spenningen som breadboardet får fra spenningsgeneratoren for å få felles jord.
 
-#### Oppgave 3
+#### L3 Oppgave 3
 
 ##### Verdt å lese
 
@@ -688,13 +710,11 @@ while(1) {
 
 Sjekk "Timing diagrams" i ADC-databladet for å forstå hvordan ting funker i ADCen. WR- og RD-signal fikser ATmega162 på egenhånd. Legg merke til aktiv lav CS. Hvis dere vil bruke interrupts så ser dere at INTR-utgangen på ADC blir høy etter at ADC har mottatt adressen fra ATmega162. Da kan INTR gi signal til ATmega162 om at ATmega162 kan begynne å lese data fra ADC.
 
-#### Oppgave 4
-
-##### Verdt å vite
+#### L3 Oppgave 4
 
 Pin 1 (?) (helt til venstre) på PORTB og pin 5 (?) (midten) på PORTD. Sjekk med oscilloskopet for sikkerhets skyld :).
 
-#### Oppgave 5
+#### L3 Oppgave 5
 
 ##### Verdt å lese
 
@@ -704,23 +724,21 @@ Pin 1 (?) (helt til venstre) på PORTB og pin 5 (?) (midten) på PORTD. Sjekk me
 
 Sliderutgangene på PORTB og PORTD skal bare rett inn på FILTER-inngangene. FILTER-utgangene kobles på CH3 og CH4 på ADC.
 
-#### Oppgave 6
-
-##### Verdt å vite
+#### L3 Oppgave 6
 
 Touchknapp-pinnene er rett ved slider-pinnene på PORTB og PORTD. Husk også joystick-knappen på JOY-CONN pin 3. Vi koblet de tre knappene inn på PB0-PB2 på ATmega162.
 
-#### Oppgave 7-8
+#### L3 Oppgave 7-8
 
 Se en eller annen kok.
 
 ### Lab 4
 
-#### Oppgave 1
+#### L4 Oppgave 1
 
-Hvis dere har koblet opp og progget GALen som beskrevet i [lab 2 oppgave3](#oppgave-3-1) så er alt good :).
+Hvis dere har koblet opp og progget GALen som beskrevet i [lab 2 oppgave 3](lab2.md#l2-oppgave-3) så er alt good :).
 
-#### Oppgave 2
+#### L4 Oppgave 2
 
 ##### Verdt å lese
 
@@ -736,11 +754,11 @@ CS og D/C på OLED går rett til tilsvarende utganger på GALen.
 
 WR (aka R/W) på OLED kan kobles rett på WR på ATmega162. Forklaring: I oppgaveteksten står det at OLEDen er hardvarekonfigurert til 8080-modus. I "Figure 7-2" i kp. 7.1.2 i SSD1780-databladet kan man se at data blir skrevet til OLEDen på rising edge på WR-signalet. Med andre ord kommer alt til å funke så lenge det fortsatt er data ute på databussen på det tidspunktet WR går fra lav til høy. I ATmega162-databladet i "Figure 13" ser man at ATmega162 sender data ut på databussen, og så blir WR lav, og så blir WR høy, og så slutter den å sende data. Altså er det fortsatt data på databussen når WR går fra lav til høy. Og derfor funker det å koble WR rett på WR :).
 
-#### Oppgave 3
+#### L4 Oppgave 3
 
 Ja nei si det.
 
-#### Oppgave 4
+#### L4 Oppgave 4
 
 ##### Verdt å lese
 
@@ -861,11 +879,11 @@ for (int line = 0; line < 8; line++) {
 }
 ~~~
 
-#### Oppgave 5
+#### L4 Oppgave 5
 
 Last ned *fonts.h* fra Blackboard. Trenger ikke gjøre noe mer.
 
-#### Oppgave 6
+#### L4 Oppgave 6
 
 Vi droppet å bruke `printf()` og laget heller en egen `oled_print()`. Hvis man stirrer litt på innholdet i *fonts.h*, så skjønner man kanskje at hvert element i font-arrayet inneholder noen byte-elementer som til sammen utgjør en bokstav. For eksempel "A", hentet fra font8-variablen:
 
@@ -924,9 +942,7 @@ void oled_print(char c[]) {
 
 Da kan man skrive tekst til OLED-skjermen ved å bruke `oled_print("Livet er et kaffe")`.
 
-#### Oppgave 7
-
-Finn en bra kok :)
+#### L4 Oppgave 7
 
 Stikkord for å mekke meny selv: menyelement-struct med felter for menytittel, funksjonspeker, array av pekere til undermenyelementer, og peker til "overmenyen" (altså menyen man kom fra hvis dette elementet er en undermeny).
 
@@ -940,4 +956,86 @@ Om man gjør det på en sånn-ish måte så kan man ha evig mange menyelementer 
 
 Og så trenger man noe greier for å finne ut hvilken retning joysticken beveges. Lag en funksjon som finner ut hvilken retning (x eller y) som har størst utslag i positiv eller negativ retning, deretter finn ut om utslaget i en av retningene er større enn et eller annet tall. Så returnerer dere en enum-verdi (eller bare en int) når dere vet hvilken retning joysticken presses i.
 
+Menyelement-structen vår ser sånn her ut:
+
+~~~c
+#define MAX_SUBMENUS 10 // Må settes til det høyeste antall menyelementer man har tenkt til å ha i samme meny
+typedef struct Menu {
+	char * text; // Teksten/tittelen til menyelementet
+	void (*function)(); // Peker til funksjonen som skal kalles hvis det ikke finnes noen undermeny
+	struct Menu * parent; // Pappameny :)
+	struct Menu * subMenu[MAX_SUBMENUS]; // Undermeny. Array av pekere til menyelementer
+} menu_t, *menu_ptr;
+~~~
+
+Da kan vi initialisere en tom meny med noe sånt som det under. Her lager vi bare et helt tomt menyelement. Tanken er at de menyelementene som vises når man starter menyen, er undermenyelementene til denne tomme menyen.
+
+~~~c
+menu_ptr menu = malloc(sizeof(menu_t));
+~~~
+
+Nå trengs en funksjon for å legge til undermenyelementer. Undermenyelementene skal ikke være tomme, de skal inneholde tittel, funksjonspeker, peker til pappamenyen, og evt. et array av pekere til undermenyelementer.
+
+Funksjonen `menu_add()` under tar inn argumentene tittel, peker til foreldremenyen og funksjonspeker, og så opprettes et menyelement med verdier fra argumentene. Deretter blir en peker til menyelementet lagt til på slutten av foreldremenyen sitt undermeny-array.
+
+~~~c
+menu_ptr menu_add(menu_ptr parent, char * text, void (*function)()) {
+	menu_ptr subMenu = malloc(sizeof(menu_t)); // Oppretter tomt undermenyelement
+	subMenu->text = text; // Setter inn tittel
+	subMenu->function = function; // Setter inn peker til funksjon
+	subMenu->parent = parent; // Setter inn peker til foreldremenyen
+
+	// Legger undermenyelementet til slutten av undermeny-arrayet til foreldremenyen
+	int i = 0;
+	while (parent->subMenu[i] != NULL) {
+		i++;
+	}
+	parent->subMenu[i] = subMenu;
+
+	return subMenu; // Returnerer en peker til undermenyelementet vi har opprettet
+}
+~~~
+
+Kult. Nå kan vi lage en meny. For å lage en meny med to elementer, hvor det ene elementet utfører en funksjon og det andre elementet går til en annen undermeny med tre elementer så kan man gjøre sånn her:
+
+~~~c
+menu_ptr menu = malloc(sizeof(menu_t)); // Selve menyen initialiseres
+
+// Undermenyelementer til menu. Disse fungerer som hovedmeny
+// Legg merke til at "Spill et spill"-menyyen får funksjonspeker NULL fordi denne skal ha en undermeny
+menu_ptr menu_highscore = menu_add(menu, "Vis highscore", &show_highscore);
+menu_ptr menu_play = menu_add(menu, "Spill et spill", NULL);
+
+// Undermenyelementer til "Spill et spill"-menyen. Hvert element peker til en funksjon som starter et spill
+menu_ptr menu_game1 = menu_add(menu_play, "Spill 1", &play_game1);
+menu_ptr menu_game2 = menu_add(menu_play, "Spill 2", &play_game2);
+menu_ptr menu_game3 = menu_add(menu_play, "Spill 3", &play_game3);
+
+// Funksjonene som blir kalt når man trykker på riktig menyelement
+void show_highscore() { /* Viser highscore */ }
+void play_game1() { /* Spiller spill 1 */ }
+void play_game2() { /* Spiller spill 2 */ }
+void play_game3() { /* Spiller spill 3 */ }
+~~~
+
+Med greiene over får vi altså en meny som ser ut som dette:
+
+~~~
+"Vis highscore"  -> show_highscore();
+"Spill et spill" -> "Spill 1" -> play_game1();
+                    "Spill 2" -> play_game1();
+                    "Spill 3" -> play_game1();
+~~~
+
+Og på samme måte kan legge til undermenyelementer til for eksempel "Spill 2"-menyen og enda en undermeny under der igen og så videre.
+
+Det vi har nå er altså en masse structer som peker til hverandre. Det som står igjen nå er logikk for å navigere mellom structene og for å vise elementene som er i en meny. Skriver kanskje litt om det sånn etterhvert en gang
+
 ### Fortsettelse følger
+
+---
+TTK4155 \
+Byggern \
+Industrielle og innbygde datasystemers konstruksjon \
+Embedded and Industrial Computer Systems Design \
+NTNU
