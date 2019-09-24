@@ -16,13 +16,12 @@
 > &mdash; *Oppgaveteksten*
 
 \
-Dette er den byggernhjelpen jeg skulle ønske jeg hadde hatt selv. Lykke til :)
-
+Dette er den byggernhjelpen jeg skulle ønske jeg hadde hatt selv. Lykke til :) \
 Noe feil i denne greia som bør fikses? Send meg ei melding, eller legg inn en issue eller en pull request.
 
 ## Labhjelp
 
-Hele labhjelpen finner du [på forsiden](https://github.com/erlendb/TTK4155-Byggern-labhjelp). \
+Hele greia finner du [på forsiden](https://github.com/erlendb/TTK4155-Byggern-labhjelp). \
 Lab 1 finnes i [lab1.md](lab1.md). \
 Lab 2 finnes i [lab2.md](lab2.md). \
 Lab 3 finnes i [lab3.md](lab3.md). \
@@ -762,6 +761,8 @@ Ja nei si det.
 
 ##### Verdt å lese
 
+* "Recommended software initialization", kp. 9.4 i LY190-databladet
+* "Set memory addressing mode", kp. 9.1.3 i SSD1780-databladet
 * "Graphic display data ram", kp. 7.7 i SSD1780-databladet
 * "Command table", kp. 8 i SSD1780-databladet. "Table 8-1".
 
@@ -814,7 +815,7 @@ For å skjønne hvordan man skriver til OLEDen kan det lønne seg å ta en titt 
 
 For å få fram noe på OLEDen sender man først en kommando for å fortelle hvor man på OLEDen man skal skrive, og deretter sender man 8 bit til OLEDen.
 
-Horizontal, vertical og page addressing mode er ulike moduser man kan velge som på litt ulike måter lar deg bestemme posisjon på OLEDen. Vi brukte stort sett page addressing mode, så denne beskrivelsen tar utgangspunkt i at du bruker det.
+Horizontal, vertical og page addressing mode er ulike moduser man kan velge som på litt ulike måter lar deg bestemme posisjon på OLEDen. Vi brukte stort sett page addressing mode, så denne beskrivelsen tar utgangspunkt i at du bruker det. Kapittel 9.1.3 har masse fine figurer som forklarer hvordan de forskjellige addresseringsmodusene funker.
 
 I "Table 8-1" finnes info om hvordan man skriver kommandoer og data til OLEDen. For å  velge modus må man sende kommandoen `0x20` aka `0b00100000` til OLEDen. Deretter sender man `0b10` for å velge page addressing mode:
 
@@ -866,7 +867,7 @@ Når man endelig har fått satt riktig addressing mode, gått til riktig linje o
 
 En litt stilig greie med OLEDen er at når du har gått til en linje og en kolonne og skrevet en byte til skjermen (aka skrudd på noen piksler i den vertikale 8-bit linja), så økes kolonneposisjonen din automatisk med én. Det vil si at hvis du går til linje nummer 3, kolonne nummer 10 og så skriver data `0b1` til OLED 20 ganger rett etter hverandre (uten å gå til en ny linje eller kolonne innimellom), så får du en horisontal rett linje på OLED-skjermen som er 20 piksler lang.
 
-For å gjøre hele skjermen blank/sette alle pikslene lave kan man loope over alle de 8 linjene på skjermen, og deretter skrive `0` til den 128 ganger. Man trenger ikke å flytte seg bortover 127 ganger ettersom OLEDen automatisk flytter posisjonen din én kolonne bort hver gang man skriver data.
+For å gjøre hele skjermen blank/sette alle pikslene lave kan man loope over alle de 8 linjene på skjermen, og skrive `0` 128 ganger til hver linje. Man trenger ikke å flytte seg bortover 127 ganger ettersom OLEDen automatisk flytter posisjonen din én kolonne bort hver gang man skriver data.
 
 ~~~c
 // Setter alle piksler på skjermen lave
@@ -888,20 +889,23 @@ Last ned *fonts.h* fra Blackboard. Trenger ikke gjøre noe mer.
 Vi droppet å bruke `printf()` og laget heller en egen `oled_print()`. Hvis man stirrer litt på innholdet i *fonts.h*, så skjønner man kanskje at hvert element i font-arrayet inneholder noen byte-elementer som til sammen utgjør en bokstav. For eksempel "A", hentet fra font8-variablen:
 
 ~~~
+// 0          1          2          3          4          5          6          7
 {0b01111100,0b01111110,0b00010011,0b00010011,0b01111110,0b01111100,0b00000000,0b00000000}, // A
 ~~~
 
 Under her står hvert av elementene i A-arrayet nedover, med det minst signifikante bitet øverst. Hvis man legger godvilja til og ser på 1-tallene, så minner det om en "A". Det er altså sånn man må skrive bitene/pikslene til OLEDen for å få fram "A"-en.
 
 ~~~
-0011000
-0111100
-1100110
-1100110
-1111110
-1100110
-1100110
-0000000
+01234567: plass i arrayet
+--------
+00110000
+01111000
+11001100
+11001100
+11111100
+11001100
+11001100
+00000000
 ~~~
 
 Når man skal skrive A-en ut på skjerman kan man ganske enkelt iterere over elementene i A-arrayet og skrive hvert element til skjermen etter hverandre. Det funker fordi det minst signifikante bitet man skriver til OLEDen havner lengst opp på skjermen (akkurat som A-illustrasjonen over) og fordi OLED-en automagisk flytter oss en kolonne videre for hver byte vi sender.
@@ -910,18 +914,18 @@ Så for å skrive A fra font8 kan man gjøre sånn her omtrent:
 
 ~~~c
 int A = 33; // Fordi A-bytene er på plass 33 i font8-arrayet
-for (int i = 0; i < 7; i++) { // Fordi font8 består av sju byte per bokstav
+for (int i = 0; i < 8; i++) { // Fordi font8 består av 8 byte per bokstav
 	int byte = pgm_read_byte(&font8[A][i]); // Henter data fra PROGMEM
 	oled_write_data(byte);
 }
 ~~~
 
-Hvis man sammenligner hvilke plasser bokstavene har i font-arrayene med bokstavenes ASCII-kode (samme kode som `char`-typen bruker), så finner man ut at det kan være fornuftig å gjøre noe sånt som dette:
+Hvis man sammenligner hvilke plasser bokstavene har i font-arrayene med bokstavenes ASCII-kode (samme kode som `char`-typen bruker), så finner man ut at det kan være fornuftig å gjøre noe sånt som dette (se http://www.asciitable.com/):
 
 ~~~c
 void oled_print_char(char c) {
   c = c-32;
-  for (int i = 0; i < 7; i++) {
+  for (int i = 0; i < 8; i++) {
     int byte = pgm_read_byte(&font8[c][i]);
     oled_write_data(byte);
   }
@@ -940,7 +944,7 @@ void oled_print(char c[]) {
 }
 ~~~
 
-Da kan man skrive tekst til OLED-skjermen ved å bruke `oled_print("Livet er et kaffe")`.
+Da kan man skrive tekst til OLED-skjermen ved å bruke for eksempel `oled_print("Livet er et kaffe")`.
 
 #### L4 Oppgave 7
 
@@ -948,7 +952,7 @@ Stikkord for å mekke meny selv: menyelement-struct med felter for menytittel, f
 
 Hvis man er i en meny og velger et menyelement som ikke har en undermeny, så kalles funksjonen som funksjonspekeren peker til.
 
-Hvis man er trykker på et menyelement som har en undermeny, så går man til undermenyen.
+Hvis man trykker på et menyelement som har en undermeny, så går man til undermenyen.
 
 Hvis man går tilbake fra en undermeny, så går man til den menyen som er lagret i "peker til overmeny"-feltet i structen.
 
@@ -1023,8 +1027,8 @@ Med greiene over får vi altså en meny som ser ut som dette:
 ~~~
 "Vis highscore"  -> show_highscore();
 "Spill et spill" -> "Spill 1" -> play_game1();
-                    "Spill 2" -> play_game1();
-                    "Spill 3" -> play_game1();
+                    "Spill 2" -> play_game2();
+                    "Spill 3" -> play_game3();
 ~~~
 
 Og på samme måte kan legge til undermenyelementer til for eksempel "Spill 2"-menyen og enda en undermeny under der igen og så videre.
