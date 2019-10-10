@@ -26,7 +26,7 @@ Lab 1 finnes i [lab1.md](lab1.md). \
 Lab 2 finnes i [lab2.md](lab2.md). \
 Lab 3 finnes i [lab3.md](lab3.md). \
 Lab 4 finnes i [lab4.md](lab4.md). \
-Lab 5 finnes i [lab4.md](lab5.md).
+Lab 5 finnes i [lab5.md](lab5.md).
 
 **Supertips 1**: Hvis dere er ganske sikre på at dere har gjort alt riktig, og koken har gjort det samme som dere (og studass ikke skjønner hva som er feil), så kan det godt hende at en av komponentene deres ikke funker. Lån naboen sin komponent og test med den, så slipper dere å bruke evig mye tid før dere skjønner at det er komponenten som er skyldig.
 
